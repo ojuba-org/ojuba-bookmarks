@@ -1,6 +1,6 @@
 Name:           ojuba-bookmarks
 Version:        15
-Release:        3
+Release:        5
 Summary:        Ojuba bookmarks
 Group:          Applications/Internet
 License:        Waqf
@@ -28,9 +28,22 @@ install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{_datadir}/bookmarks
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
 
-%post
+%triggerin -- firefox
+for i in %{_libdir}/firefox-*
+do
+ if [ -x $i/firefox ]; then
+   mkdir -p $i/defaults/profile/ || :
+   ln -sf %{_datadir}/bookmarks/default-bookmarks.html $i/defaults/profile/bookmarks.html
+ fi
+done
 
-%postun
+%triggerpostun -- firefox
+for i in %{_libdir}/firefox-*
+do
+ if [ ! -x $i/firefox ]; then
+   [ -e $i/defaults/profile/bookmarks.html ] && rm $i/defaults/profile/bookmarks.html
+ fi
+done
 
 %files
 %defattr(-,root,root,-)
