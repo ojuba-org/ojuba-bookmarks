@@ -1,11 +1,11 @@
 Name:           ojuba-bookmarks
-Version:        15
-Release:        5
+Version:        16
+Release:        1
 Summary:        Ojuba bookmarks
 Group:          Applications/Internet
 License:        Waqf
 URL:            http://www.ojuba.org/
-Source0:        default-bookmarks.html
+Source0:        http://git.ojuba.org/cgit/ojuba-bookmarks/plain/default-bookmarks.html
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 Provides:       system-bookmarks
@@ -24,33 +24,23 @@ This package contains the default bookmarks for Ojuba Linux.
 %{__rm} -rf $RPM_BUILD_ROOT
 %{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/bookmarks
 install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{_datadir}/bookmarks
+%{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
+cd $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
+ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
 
 %clean
 %{__rm} -rf $RPM_BUILD_ROOT
-
-%triggerin -- firefox
-for i in %{_libdir}/firefox-*
-do
- if [ -x $i/firefox ]; then
-   mkdir -p $i/defaults/profile/ || :
-   ln -sf %{_datadir}/bookmarks/default-bookmarks.html $i/defaults/profile/bookmarks.html
- fi
-done
-
-%triggerpostun -- firefox
-for i in %{_libdir}/firefox-*
-do
- if [ ! -x $i/firefox ]; then
-   [ -e $i/defaults/profile/bookmarks.html ] && rm $i/defaults/profile/bookmarks.html
- fi
-done
 
 %files
 %defattr(-,root,root,-)
 %dir %{_datadir}/bookmarks
 %{_datadir}/bookmarks/default-bookmarks.html
+%{_libdir}/firefox/defaults/profile/bookmarks.html
 
 %changelog
+* Fri Jan 13 2012 Muayyad Saleh Alsadi <alsadi@ojuba.org> - 16-1
+- release for ojuba 16
+
 * Wed Jul 21 2010 Muayyad Saleh Alsadi <alsadi@ojuba.org> - 13.0.0-5
 - add thawab
 
