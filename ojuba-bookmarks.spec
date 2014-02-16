@@ -1,35 +1,35 @@
+%global owner ojuba-org
+%global commit #Write commit number here
+
 Name:           ojuba-bookmarks
-Version:        16
-Release:        1
+Version:        35
+Release:        1%{?dist}
 Summary:        Ojuba bookmarks
 Group:          Applications/Internet
-License:        Waqf
-URL:            http://www.ojuba.org/
-Source0:        http://git.ojuba.org/cgit/ojuba-bookmarks/plain/default-bookmarks.html
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+License:	WAQFv2
+URL:            http://ojuba.org/
+Source:		https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
 BuildArch:      noarch
 Provides:       system-bookmarks
 Provides:       fedora-bookmarks
-Obsoletes:      fedora-bookmarks < %{version}.%{release}
-Obsoletes:      system-bookmarks < %{version}.%{release}
+Obsoletes:      fedora-bookmarks
+Obsoletes:      system-bookmarks
 
 %description
 This package contains the default bookmarks for Ojuba Linux.
 
 %prep
+%setup -q -n %{name}-%{commit}
 
 %build
+# NOTHING TO BUILD.
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
 %{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/bookmarks
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{_datadir}/bookmarks
+install -p -m 644 default-bookmarks.html $RPM_BUILD_ROOT%{_datadir}/bookmarks
 %{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
 cd $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
 ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
-
-%clean
-%{__rm} -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
@@ -38,6 +38,10 @@ ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
 %{_libdir}/firefox/defaults/profile/bookmarks.html
 
 %changelog
+* Sun Feb 16 2014 Mosaab Alzoubi <moceap@hotmail.com> - 35-1
+- General Revision.
+- Release For Ojuba 35.
+
 * Fri Jan 13 2012 Muayyad Saleh Alsadi <alsadi@ojuba.org> - 16-1
 - release for ojuba 16
 
@@ -57,4 +61,3 @@ ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
 - remove duplicated links
 * Tue May 20 2008 Muayyad Saleh Alsadi <alsadi@ojuba.org> - 8.0.0-1
 - Initial version
-
