@@ -3,17 +3,18 @@
 
 Name:           ojuba-bookmarks
 Version:        35
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Ojuba bookmarks
 Group:          Applications/Internet
 License:	WAQFv2
 URL:            http://ojuba.org/
 Source:		https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
-BuildArch:      noarch
 Provides:       system-bookmarks
 Provides:       fedora-bookmarks
 Obsoletes:      fedora-bookmarks
 Obsoletes:      system-bookmarks
+Provides:       redhat-bookmarks
+Obsoletes:      redhat-bookmarks
 
 %description
 This package contains the default bookmarks for Ojuba Linux.
@@ -29,7 +30,7 @@ This package contains the default bookmarks for Ojuba Linux.
 install -p -m 644 default-bookmarks.html $RPM_BUILD_ROOT%{_datadir}/bookmarks
 %{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
 cd $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
-ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
+ln -s %{_datadir}/bookmarks/default-bookmarks.html bookmarks.html
 
 %files
 %defattr(-,root,root,-)
@@ -38,6 +39,9 @@ ln -s ../../../../bookmarks/default-bookmarks.html bookmarks.html
 %{_libdir}/firefox/defaults/profile/bookmarks.html
 
 %changelog
+* Sun Mar 2 2014 Mosaab Alzoubi <moceap@hotmail.com> - 35-3
+- Fixes
+
 * Sun Feb 16 2014 Mosaab Alzoubi <moceap@hotmail.com> - 35-1
 - General Revision.
 - Release For Ojuba 35.
