@@ -9,6 +9,7 @@ Group:          Applications/Internet
 License:	WAQFv2
 URL:            http://ojuba.org/
 Source:		https://github.com/%{owner}/%{name}/archive/%{commit}/%{name}-%{commit}.tar.gz
+BuildArch:      noarch
 Provides:       system-bookmarks
 Provides:       fedora-bookmarks
 Obsoletes:      fedora-bookmarks
