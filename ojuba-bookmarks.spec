@@ -2,9 +2,10 @@
 %global commit #Write commit number here
 
 Name:           ojuba-bookmarks
-Version:        35
-Release:        3%{?dist}
+Version:        36
+Release:        1%{?dist}
 Summary:        Ojuba bookmarks
+Summary(ar):		شريط علامات أعجوبة
 Group:          Applications/Internet
 License:	WAQFv2
 URL:            http://ojuba.org/
@@ -13,12 +14,15 @@ BuildArch:      noarch
 Provides:       system-bookmarks
 Provides:       fedora-bookmarks
 Obsoletes:      fedora-bookmarks
-Obsoletes:      system-bookmarks
+#Obsoletes:      system-bookmarks
 Provides:       redhat-bookmarks
 Obsoletes:      redhat-bookmarks
 
 %description
 This package contains the default bookmarks for Ojuba Linux.
+
+%description -l ar
+قائمة علامات أعجوبة الافتراضية و الحاوية على روابط الوصول السّريع لمواقع على الشّابكة افتراضيًا و المخثثة لنظام أعجوبة.
 
 %prep
 %setup -q -n %{name}-%{commit}
@@ -29,17 +33,23 @@ This package contains the default bookmarks for Ojuba Linux.
 %install
 %{__mkdir_p} $RPM_BUILD_ROOT%{_datadir}/bookmarks
 install -p -m 644 default-bookmarks.html $RPM_BUILD_ROOT%{_datadir}/bookmarks
-%{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
-cd $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
-ln -s %{_datadir}/bookmarks/default-bookmarks.html bookmarks.html
+#%{__mkdir_p} $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
+#cd $RPM_BUILD_ROOT%{_libdir}/firefox/defaults/profile/
+#ln -s %{_datadir}/bookmarks/default-bookmarks.html bookmarks.html
 
 %files
 %defattr(-,root,root,-)
 %dir %{_datadir}/bookmarks
 %{_datadir}/bookmarks/default-bookmarks.html
-%{_libdir}/firefox/defaults/profile/bookmarks.html
+#%{_libdir}/firefox/defaults/profile/bookmarks.html
 
 %changelog
+* Sun Mar 1 2015 Mosaab Alzoubi <moceap@hotmail.com> - 36-1
+- First 36 release.
+- Add Arabic comment.
+- Remove un-needed lines.
+- Noarched.
+
 * Sun Mar 2 2014 Mosaab Alzoubi <moceap@hotmail.com> - 35-3
 - Fixes
 
